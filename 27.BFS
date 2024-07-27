@@ -1,0 +1,38 @@
+% Define the graph edges with costs
+edge(a, b, 1).
+edge(a, c, 3).
+edge(b, d, 2).
+edge(b, e, 4).
+edge(c, f, 5).
+edge(d, g, 1).
+edge(e, g, 1).
+edge(f, g, 2).
+% Define the heuristic function (for simplicity, it's the same as the cost in this example)
+heuristic(Node, Heuristic) :-
+    member((Node, Heuristic), [(a, 6), (b, 4), (c, 5), (d, 2), (e, 4), (f, 3), (g, 0)]).
+
+% Best First Search
+best_first_search(Start, Goal, Path, Cost) :-
+    heuristic(Start, StartHeuristic),
+    bfs([(Start, [Start], StartHeuristic)], Goal, RevPath, Cost),
+    reverse(RevPath, Path).
+
+% Helper predicate for BFS
+bfs([(_, Path, Cost)|_], Goal, Path, Cost) :-
+    last(Path, Goal).
+
+bfs([(_, Path, _)|Queue], Goal, FinalPath, FinalCost) :-
+    last(Path, CurrentNode),
+    findall((Heuristic, NewPath, NewCost),
+            (edge(CurrentNode, NextNode, StepCost),
+             \+ member(NextNode, Path),
+             heuristic(NextNode, Heuristic),
+             NewCost is Cost + StepCost,
+             append(Path, [NextNode], NewPath)),
+            Children),
+    append(Queue, Children, NewQueue),
+    sort(0, @=<, NewQueue, SortedQueue),
+    bfs(SortedQueue, Goal, FinalPath, FinalCost).
+
+% Query example
+% ?- best_first_search(a, g, Path, Cost).
