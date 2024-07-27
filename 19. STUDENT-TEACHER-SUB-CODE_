@@ -1,0 +1,29 @@
+% Define the database with relationships between students, teachers, and subject codes.
+% The format is student_teacher_subject(Student, Teacher, SubjectCode).
+
+% Example entries in the database
+student_teacher_subject('Alice', 'Mr. Smith', 'MATH101').
+student_teacher_subject('Bob', 'Mrs. Johnson', 'ENG202').
+student_teacher_subject('Charlie', 'Mr. Smith', 'MATH101').
+student_teacher_subject('Diana', 'Dr. Brown', 'SCI303').
+student_teacher_subject('Eve', 'Mrs. Johnson', 'ENG202').
+
+% Query to find the teacher of a specific student and subject
+find_teacher(Student, SubjectCode, Teacher) :-
+    student_teacher_subject(Student, Teacher, SubjectCode).
+
+% Query to find the students taught by a specific teacher for a subject
+find_students(Teacher, SubjectCode, Student) :-
+    student_teacher_subject(Student, Teacher, SubjectCode).
+
+% Query to find the subject codes a specific student is enrolled in
+find_subjects(Student, SubjectCode) :-
+    student_teacher_subject(Student, _, SubjectCode).
+
+% Add a new student-teacher-subject relationship to the database
+add_student_teacher_subject(Student, Teacher, SubjectCode) :-
+    assert(student_teacher_subject(Student, Teacher, SubjectCode)).
+
+% Remove a student-teacher-subject relationship from the database
+remove_student_teacher_subject(Student, Teacher, SubjectCode) :-
+    retract(student_teacher_subject(Student, Teacher, SubjectCode)).

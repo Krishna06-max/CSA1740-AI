@@ -1,0 +1,32 @@
+import numpy as np
+
+
+np.random.seed(0)
+
+
+input_size = 2  
+hidden_size = 3  
+output_size = 2  
+
+W1 = np.random.randn(input_size, hidden_size)  
+b1 = np.random.randn(hidden_size)               
+W2 = np.random.randn(hidden_size, output_size)  
+b2 = np.random.randn(output_size)               
+
+X = np.array([
+    [0.1, 0.2],
+    [0.4, 0.6],
+    [0.9, 0.8]
+])
+
+Z1 = np.dot(X, W1) + b1
+A1 = np.maximum(0, Z1)  # ReLU activation
+
+Z2 = np.dot(A1, W2) + b2
+
+e_x = np.exp(Z2 - np.max(Z2, axis=1, keepdims=True))  # Subtract max for numerical stability
+A2 = e_x / e_x.sum(axis=1, keepdims=True)  # Softmax
+
+print("Input:\n", X)
+print("\nHidden layer activations (ReLU):\n", A1)
+print("\nOutput layer activations (softmax probabilities):\n", A2)

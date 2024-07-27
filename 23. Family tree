@@ -1,0 +1,64 @@
+% Define parent relationships
+parent(john, mary).
+parent(john, james).
+parent(susan, mary).
+parent(susan, james).
+parent(mary, alice).
+parent(mary, bob).
+parent(peter, alice).
+parent(peter, bob).
+
+% Define male and female
+male(john).
+male(james).
+male(peter).
+male(bob).
+
+female(susan).
+female(mary).
+female(alice).
+
+% Define grandparent relationship
+grandparent(X, Y) :-
+    parent(X, Z),
+    parent(Z, Y).
+
+% Define sibling relationship
+sibling(X, Y) :-
+    parent(P, X),
+    parent(P, Y),
+    X \= Y.
+
+% Define aunt/uncle relationship
+aunt_or_uncle(X, Y) :-
+    sibling(X, P),
+    parent(P, Y).
+
+% Define cousin relationship
+cousin(X, Y) :-
+    parent(P1, X),
+    parent(P2, Y),
+    sibling(P1, P2).
+
+% Define ancestor relationship
+ancestor(X, Y) :-
+    parent(X, Y).
+ancestor(X, Y) :-
+    parent(X, Z),
+    ancestor(Z, Y).
+
+% Define descendant relationship
+descendant(X, Y) :-
+    parent(Y, X).
+descendant(X, Y) :-
+    parent(Z, X),
+    descendant(Z, Y).
+
+% Queries to test the family tree
+% ?- parent(john, Child).
+% ?- grandparent(john, Grandchild).
+% ?- sibling(mary, Sibling).
+% ?- aunt_or_uncle(james, NieceOrNephew).
+% ?- cousin(alice, Cousin).
+% ?- ancestor(john, Descendant).
+% ?- descendant(alice, Ancestor).

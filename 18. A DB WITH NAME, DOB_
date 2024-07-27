@@ -1,0 +1,16 @@
+person('Alice', '1990-01-15').
+person('Bob', '1985-06-20').
+person('Charlie', '1992-12-10').
+person('Diana', '2000-04-25').
+
+find_dob(Name, DOB) :-
+    person(Name, DOB).
+
+find_name(DOB, Name) :-
+    person(Name, DOB).
+
+add_person(Name, DOB) :-
+    assert(person(Name, DOB)).
+
+remove_person(Name, DOB) :-
+    retract(person(Name, DOB)).

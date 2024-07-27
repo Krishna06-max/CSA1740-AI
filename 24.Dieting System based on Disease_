@@ -1,0 +1,49 @@
+% Define the database of diseases and their recommended diets.
+% The format is diet_for_disease(Disease, Diet).
+
+% Example entries in the database
+diet_for_disease(diabetes, [whole_grains, vegetables, lean_proteins, fruits, low_fat_dairy]).
+diet_for_disease(hypertension, [low_sodium, whole_grains, fruits, vegetables, lean_proteins]).
+diet_for_disease(obesity, [vegetables, fruits, whole_grains, lean_proteins, low_fat_dairy, nuts]).
+diet_for_disease(celiac_disease, [gluten_free_grains, fruits, vegetables, lean_proteins, dairy]).
+diet_for_disease(cardiovascular_disease, [fruits, vegetables, whole_grains, lean_proteins, nuts, seeds]).
+diet_for_disease(anemia, [iron_rich_foods, vitamin_c_rich_foods, lean_proteins, leafy_greens, nuts, seeds]).
+
+% Define the database of foods and their benefits
+food_benefits(whole_grains, [fiber, vitamins, minerals, low_glycemic_index]).
+food_benefits(vegetables, [vitamins, minerals, fiber, antioxidants]).
+food_benefits(lean_proteins, [protein, low_fat]).
+food_benefits(fruits, [vitamins, minerals, fiber, antioxidants]).
+food_benefits(low_fat_dairy, [calcium, protein, low_fat]).
+food_benefits(nuts, [healthy_fats, protein, fiber, vitamins, minerals]).
+food_benefits(gluten_free_grains, [fiber, vitamins, minerals, gluten_free]).
+food_benefits(iron_rich_foods, [iron, protein]).
+food_benefits(vitamin_c_rich_foods, [vitamin_c, antioxidants]).
+food_benefits(leafy_greens, [vitamins, minerals, fiber, antioxidants]).
+
+% Query to find the recommended diet for a specific disease
+recommend_diet(Disease, Diet) :-
+    diet_for_disease(Disease, Diet),
+    write('Recommended diet for '),
+    write(Disease),
+    write(': '),
+    write(Diet),
+    nl.
+
+% Query to find the benefits of a specific food
+food_benefits_query(Food) :-
+    food_benefits(Food, Benefits),
+    write('Benefits of '),
+    write(Food),
+    write(': '),
+    write(Benefits),
+    nl.
+
+% Query to find all recommended foods for a specific nutrient
+nutrient_foods(Nutrient, Foods) :-
+    findall(Food, (food_benefits(Food, Benefits), member(Nutrient, Benefits)), Foods).
+
+% Example queries:
+% ?- recommend_diet(diabetes, Diet).
+% ?- food_benefits_query(whole_grains).
+% ?- nutrient_foods(fiber, Foods).

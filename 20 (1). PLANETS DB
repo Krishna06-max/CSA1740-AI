@@ -1,0 +1,35 @@
+% Define the database of planets with their names, distances from the sun, and diameters.
+% The format is planet(Name, DistanceFromSunAU, DiameterKM).
+
+% Example entries in the database
+planet('Mercury', 0.39, 4879).
+planet('Venus', 0.72, 12104).
+planet('Earth', 1.00, 12742).
+planet('Mars', 1.52, 6779).
+planet('Jupiter', 5.20, 139820).
+planet('Saturn', 9.58, 116460).
+planet('Uranus', 19.22, 50724).
+planet('Neptune', 30.05, 49244).
+
+% Query to find the distance from the sun given the planet's name
+find_distance(Name, Distance) :-
+    planet(Name, Distance, _).
+
+% Query to find the diameter given the planet's name
+find_diameter(Name, Diameter) :-
+    planet(Name, _, Diameter).
+
+% Query to find the name of the planet given the distance from the sun
+find_planet_by_distance(Distance, Name) :-
+    planet(Name, Distance, _).
+
+% Query to find the name of the planet given the diameter
+find_planet_by_diameter(Diameter, Name) :-
+    planet(Name, _, Diameter).
+
+% Add a new planet to the database
+add_planet(Name, Distance, Diameter) :-
+    assert(planet(Name, Distance, Diameter)).
+% Remove a planet from the database
+remove_planet(Name, Distance, Diameter) :-
+    retract(planet(Name, Distance, Diameter)).

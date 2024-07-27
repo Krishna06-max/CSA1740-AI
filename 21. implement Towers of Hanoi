@@ -1,0 +1,22 @@
+% move(N, Source, Destination, Auxiliary) solves the Towers of Hanoi problem
+% for N disks from Source to Destination using Auxiliary as the auxiliary peg.
+
+% Base case: moving 1 disk from Source to Destination.
+move(1, Source, Destination, _) :-
+    write('Move disk from '),
+    write(Source),
+    write(' to '),
+    write(Destination),
+    nl.
+
+% Recursive case: moving N disks from Source to Destination using Auxiliary.
+move(N, Source, Destination, Auxiliary) :-
+    N > 1,
+    M is N - 1,
+    move(M, Source, Auxiliary, Destination),
+    move(1, Source, Destination, _),
+    move(M, Auxiliary, Destination, Source).
+
+% Query to solve the Towers of Hanoi problem for a given number of disks.
+hanoi(N) :-
+    move(N, left, right, center).

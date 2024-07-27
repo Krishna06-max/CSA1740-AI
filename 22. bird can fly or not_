@@ -1,0 +1,46 @@
+% Define the database of birds and their ability to fly.
+% The format is can_fly(Bird, YesOrNo).
+
+% Example entries in the database
+can_fly(eagle, yes).
+can_fly(sparrow, yes).
+can_fly(penguin, no).
+can_fly(ostrich, no).
+can_fly(parrot, yes).
+can_fly(kiwi, no).
+
+% Query to find if a bird can fly
+can_bird_fly(Bird) :-
+    can_fly(Bird, yes),
+    write(Bird),
+    write(' can fly.'),
+    nl.
+
+can_bird_fly(Bird) :-
+    can_fly(Bird, no),
+    write(Bird),
+    write(' cannot fly.'),
+    nl.
+
+% Query to list all birds that can fly
+list_flying_birds :-
+    can_fly(Bird, yes),
+    write(Bird),
+    write(' can fly.'),
+    nl,
+    fail.
+list_flying_birds.
+
+% Query to list all birds that cannot fly
+list_non_flying_birds :-
+    can_fly(Bird, no),
+    write(Bird),
+    write(' cannot fly.'),
+    nl,
+    fail.
+list_non_flying_birds.
+
+% Example query:
+% ?- can_bird_fly(eagle).
+% This will return:
+% eagle can fly.
